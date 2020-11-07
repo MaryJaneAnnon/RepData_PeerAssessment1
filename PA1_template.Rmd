@@ -9,7 +9,7 @@ output:
 ## Loading and preprocessing the data
 
 library(readr)
-dataset <- read_csv(NULL)
+dataset <- read_csv(activity)
 View(dataset)
 
 ## What is mean total number of steps taken per day?
