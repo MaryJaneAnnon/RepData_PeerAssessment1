@@ -6,22 +6,75 @@ output:
 ---
 
 
-## Loading and preprocessing the data
+# Loading and preprocessing the data
 
 library(readr)
-dataset <- read_csv(activity)
+dataset <- read_csv("C:/Users/Aline/Dropbox/QSS course/Coursera/Data/activity/activity.csv")
+
 View(dataset)
 
 ## What is mean total number of steps taken per day?
 
+For this part of the assignment,I will ignore the missing values in the dataset.
 
+
+
+```{r echo=TRUE}
+library(tidyverse)
+library(lattice)
+
+dataset$date <- as.Date(dataset$date, "%Y-%m-%d")
+
+totalossteps <- aggregate(steps ~ date, data = dataset, sum, na.rm = TRUE)
+
+hist(totalossteps$steps, main = "Total steps", xlab = "", col = "green")
+
+```
+
+I will now make a histogram of the total number of steps taken each day.
+
+
+Then, I calculate and report the mean and median total number of steps taken per day.
+
+
+```{r echo=TRUE}
+
+mean(totalossteps$steps, na.rm = TRUE)
+median(totalossteps$steps, na.rm=TRUE)
+
+```
 
 ## What is the average daily activity pattern?
 
+To answer this quertion, I first make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
+
+```{r echo=TRUE}
+
+time_series <- tapply(dataset$steps, dataset$interval, mean, na.rm = TRUE)
+
+plot(row.names(time_series), time_series, type = "l", xlab = "5 minutes interval", 
+    ylab = "", main = "Number of steps taken - average", 
+    col = "blue")
+```
+
+
+Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+```{r}
+max_interval <- which.max(time_series)
+names(max_interval)
+```
 
 
 ## Imputing missing values
 
+```{r}
+activity_NA <- sum(is.na(dataset))
+activity_NA
+```
 
+I'm uncertain how to continue.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+Im uncertain how to do this.
